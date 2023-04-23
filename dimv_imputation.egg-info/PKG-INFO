@@ -1,0 +1,10 @@
+Metadata-Version: 1.0
+Name: dimv-imputation
+Version: 0.1
+Summary: Missing data imputation with Bayesian Conditional Expectation
+Home-page: http://github.com/maianhpuco/DIMV_imputation
+Author: (1) Mai Anh Vu (2) Thu Nguyen
+Author-email: maianhuel@gmail.com
+License: UNKNOWN
+Description: UNKNOWN
+Platform: UNKNOWN
