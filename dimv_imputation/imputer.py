@@ -15,9 +15,7 @@ class DIMVImputation:
             ): 
 
         self.alpha = alpha
-        self.cv = CrossValidation()
-        self.mean = mean 
-        self.cov  = covariance_matrix
+        #self.cv = CrossValidation()
         self.X_norm = None 
     
     
