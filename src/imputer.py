@@ -72,7 +72,7 @@ class DIMVImputation:
         self,
         alphas: List[float] = [0.0, 0.01, 0.1, 1.0, 10.0, 100.0],
         train_percent: float = 1,
-        features_corr_threshold: float = 1,
+        features_corr_threshold: float = 0,
         mlargest_features: int = 1
     ) -> Dict[str, Union[float, List[float]]]:
         """
