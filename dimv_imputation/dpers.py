@@ -2,15 +2,30 @@ import numpy as np
 from typing import *
 from tqdm import tqdm
 
+
 class DPERS:
+    """
+    Efficient Parameter Estimation for Randomly Missing Data.
+
+    This implementation is a modification of DPERS used only with mean-scaled dataset.
+
+    Attributes:
+        None
+    """    
     def fit(self, X:np.ndarray)->np.ndarray:
         """
-        DPER implementations in pythons
+        Estimates the covariance matrix of a given dataset with missing values.
+
+        Args:
+            X (np.ndarray): A 2D numpy array containing the dataset.
+
+        Returns:
+            np.ndarray: A 2D numpy array representing the estimated covariance matrix.
         """
-        assert isinstance(X, np.ndarray) and (np.ndim(X) == 2),\
-                ValueError("Expected 2D numpy array");
-    
-        n, p = X.shape;
+        
+        assert isinstance(X, np.ndarray) and np.ndim(X) == 2, ValueError("Expected 2D numpy array")
+
+        n, p = X.shape 
     
         # Covariance matrix to be estimated
         S = np.zeros((p, p));
@@ -27,30 +42,38 @@ class DPERS:
     
         # Calculate the upper triangle matrix of S
         for (i, j) in tqdm(upper_idx):
-            X_ij = X[:, [i, j]];
+            X_ij = X[:, [i, j]]
             
             # remove entry with all missing value
             missing_idx = np.isnan(X_ij).all(1)
-            X_ij = X_ij[~missing_idx];
+            X_ij = X_ij[~missing_idx]
     
-            S_ii, S_jj = S[i, i], S[j, j];
+            S_ii, S_jj = S[i, i], S[j, j]
             if (S_ii != 0) and (S_jj !=0 ):
                 S[i, j] = self.find_cov_ij(X_ij, S_ii, S_jj);
             else:
-                S[i, j] = np.nan;
+                S[i, j] = np.nan
     
-        S = S + S.T;
+        S = S + S.T
     
         # Halving the diagonal line;
         for i in range(p):
-            S[i,i] = S[i,i] * .5;
+            S[i,i] = S[i,i] * .5
     
-        return S;
+        return S
         
     
     def find_cov_ij(self, X_ij:np.ndarray, S_ii:float, S_jj:float)->float:
-        """
-        Given matrix (N x 2), each columns is an observation with some missing value;
+        """Estimates the covariance between two features with missing values.
+
+        Args:
+            X_ij (np.ndarray): A 2D numpy array of shape (n_samples, 2) representing the dataset
+                with missing values.
+            S_ii (float): The variance of the first feature.
+            S_jj (float): The variance of the second feature.
+
+        Returns:
+            float: The estimated covariance between the two features.
         """
      
     
@@ -80,12 +103,10 @@ class DPERS:
         roots = np.real(roots);
     
         scond = S_jj - roots ** 2/ S_ii;
-    
+
         etas = -m * np.log(
                 scond, 
                 out=np.ones_like(scond)*np.NINF, 
                 where=(scond>0)
                 ) - (S_jj - 2 * roots / S_ii * s12 + roots**2 / S_ii**2 * s11)/scond
         return roots[np.argmax(etas)];
-    
-    
