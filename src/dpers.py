@@ -4,6 +4,10 @@ from tqdm import tqdm
 
 
 class DPERS:
+    def __init__(self):
+        self.Xtrain = None
+        self.cov = None 
+    
     """
     Efficient Parameter Estimation for Randomly Missing Data.
 
@@ -22,9 +26,11 @@ class DPERS:
         Returns:
             np.ndarray: A 2D numpy array representing the estimated covariance matrix.
         """
+        X = X.astype(np.float64)
+        
         
         assert isinstance(X, np.ndarray) and np.ndim(X) == 2, ValueError("Expected 2D numpy array")
-
+        self.Xtrain = X  
         n, p = X.shape 
     
         # Covariance matrix to be estimated
@@ -59,7 +65,9 @@ class DPERS:
         # Halving the diagonal line;
         for i in range(p):
             S[i,i] = S[i,i] * .5
-    
+            
+        self.cov = S
+        
         return S
         
     
