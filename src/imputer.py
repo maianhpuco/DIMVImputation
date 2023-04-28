@@ -1,13 +1,16 @@
 import numpy as np 
 from tqdm import tqdm 
 from typing import * 
-from dimv_imputation.utils import *
+from src.utils import *
 from .dpers import DPERS 
 from .conditional_expectation import RegularizedConditionalExpectation 
 import numpy as np
 from .utils import normalize, find_largest_elements, rmse_loss
 
 class DIMVImputation:
+    """ Imputation class that use conditional expectation to fill the missing data position
+        The covariance matrix would be computed by the DPER algorithm  
+    """
     def __init__(self):
         self.initializing = False
         self.Xtrain = None
@@ -25,11 +28,11 @@ class DIMVImputation:
         """
         Imputation class that use conditional expectation to fill the missing data position
         The covariance matrix would be computed by the DPER algorithm 
-
+        When to use initializing : Initialize = True should be set if there is many missing pattern in the dataset for example randomly missing
         Args:
             X (np.ndarray): Xtrain, dataset used to computer the covariance matrix 
             initializing (bool, optional): Defaults to False; when  initializing is set as True, the missing position would be all initialize by 0 (also the mean of the scaled)
-        
+            
         """
         self.initializing = initializing 
         self.Xtrain = X
@@ -67,7 +70,7 @@ class DIMVImputation:
 
     def cross_validate(
         self,
-        alphas: List[float] = None,
+        alphas: List[float] = [0.0, 0.01, 0.1, 1.0, 10.0, 100.0],
         train_percent: float = 1,
         features_corr_threshold: float = 1,
         mlargest_features: int = 1
@@ -76,7 +79,7 @@ class DIMVImputation:
         Perform cross-validation on the model.
 
         Args:
-            alphas (List[float], optional): Alpha values to use for cross-validation. Defaults to None.
+            alphas (List[float], optional): Alpha values to use for cross-validation. Defaults is [0.0, 0.01, 0.1, 1.0, 10.0, 100.0].
             train_percent (float, optional): Percentage of the training data to use for cross-validation. Defaults to 1. (100%)
             features_corr_threshold (float, optional): Correlation threshold to use when selecting features. Defaults to 1.
             mlargest_features (int, optional): Number of top features to use when selecting features. Defaults to 1.
@@ -87,8 +90,8 @@ class DIMVImputation:
         #set cv_mode = True
         self.cv_mode = True 
         
-        if  alphas is None: 
-            alphas = np.append(0, np.logspace(-2, 2, 5)).tolist()
+        # if  alphas is None: 
+        #     alphas = np.append(0, np.logspace(-2, 2, 5)).tolist()
         
         print("Start Cross Validation with alphas = {} and {} % of training set".format(alphas, train_percent*100))
         assert (train_percent <= 1 and train_percent > 0.1), " train_percent must be in range(0.1, 1] "
@@ -109,15 +112,14 @@ class DIMVImputation:
         
         observed_mask = ~np.isnan(X_cv)
 
-        for alpha in alphas: 
+        for alpha in alphas:
+            print("Running Cross Validation, alpha = ".format(alpha)) 
             try:
                 X_cv_imputed = self.transform(
                     X_cv, 
-                    alpha=alpha, 
-                    cv_mode=True, 
+                    alpha=alpha,
                     features_corr_threshold=features_corr_threshold, 
-                    mlargest_features=mlargest_features, 
-                    run_cross_validation = False)
+                    mlargest_features=mlargest_features)
                     
                 # print(X_cv_imputed.shape)
 
@@ -203,7 +205,6 @@ class DIMVImputation:
         Args:
             X_input (np.ndarray): Input array of shape (n_samples, n_features) containing missing values
             alpha (np.ndarray, optional): Array of shape (n_features,) containing the regularization parameter for each feature
-            run_cross_validation (bool, optional): If True, performs cross-validation for alpha selection. Default is False
             cv_mode (bool, optional): If True, performs cross-validation for selecting the best value of alpha. Default is False
             train_percent (float, optional): Float value between 0 and 1 representing the percentage of data used for training in cross-validation. Default is 1.0
             features_corr_threshold (float, optional): Correlation threshold value to select features. Default is None
@@ -212,6 +213,8 @@ class DIMVImputation:
         Returns:
             np.ndarray: Imputed array of shape (n_samples, n_features)
         """
+        X_input = X_input.astype(np.float64)
+        
         if mlargest_features is not None:
             assert mlargest_features <= self.cov_no_zeros.shape[0], \
                 "Value of features_corr_threshold should be smaller than number of features that have " 
