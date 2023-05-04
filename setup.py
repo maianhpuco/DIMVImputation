@@ -10,7 +10,7 @@ setup(
     url='https://github.com/maianh.puco/DIMVImputation.git',
 #     author='Your Name',
 #     author_email='your@email.com',
-    packages=find_packages(),
+#    packages=find_packages(),
     package_dir={"": "src"},
     install_requires=requirements,
 #     classifiers=[
