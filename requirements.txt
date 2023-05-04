@@ -1,12 +1,5 @@
-numpy==1.24.3
-tqdm==4.65.0
 autopep8==2.0.2
-numpy==1.24.3
-pycodestyle==2.10.0
-tomli==2.0.1
-tqdm==4.65.0
-autopep8==2.0.2
-numpy==1.24.3
+numpy==1.22.0
 pycodestyle==2.10.0
 tomli==2.0.1
 tqdm==4.65.0
