@@ -1,10 +1,10 @@
 import numpy as np 
 from tqdm import tqdm 
 from typing import * 
-from src.dpers import DPERS 
-from src.conditional_expectation import RegularizedConditionalExpectation 
+from dpers import DPERS 
+from conditional_expectation import RegularizedConditionalExpectation 
 import numpy as np
-from src.utils import normalize, find_largest_elements, rmse_loss
+from utils import normalize, find_largest_elements, rmse_loss
 
 class DIMVImputation:
     """ Imputation class that use conditional expectation to fill the missing data position
