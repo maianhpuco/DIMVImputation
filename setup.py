@@ -4,9 +4,9 @@ with open('requirements.txt') as f:
     requirements = f.read().splitlines() 
     
 setup(
-    name='my_package',
+    name='DIMVImputation',
     version='0.1.0',
-    description='My awesome Python package',
+    description='My awesome DIMVImputation package',
     url='https://github.com/maianh.puco/DIMVImputation.git',
 #     author='Your Name',
 #     author_email='your@email.com',
