@@ -11,6 +11,7 @@ setup(
 #     author='Your Name',
 #     author_email='your@email.com',
     packages=find_packages(),
+    package_dir={"": "src"}
     install_requires=requirements,
 #     classifiers=[
 #         'Development Status :: 3 - Alpha',
