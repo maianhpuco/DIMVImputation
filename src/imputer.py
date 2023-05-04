@@ -1,7 +1,6 @@
 import numpy as np 
 from tqdm import tqdm 
 from typing import * 
-from src.utils import *
 from .dpers import DPERS 
 from .conditional_expectation import RegularizedConditionalExpectation 
 import numpy as np
