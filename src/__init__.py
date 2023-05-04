@@ -4,7 +4,6 @@ from .imputer import DIMVImputation
 from .utils import (
     normalize, 
     rescale, 
-    monotone_missing, 
     create_image_monotone_missing, 
     create_randomly_missing, 
     rmse_loss, 
