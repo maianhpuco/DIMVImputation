@@ -1,6 +1,6 @@
 from .conditional_expectation import RegularizedConditionalExpectation 
 from .dpers import DPERS
-from .imputer import DIMVImputation 
+from .DIMVImputation import DIMVImputation 
 from .utils import (
     normalize, 
     rescale, 
