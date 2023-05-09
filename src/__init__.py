@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 from .conditional_expectation import RegularizedConditionalExpectation 
 from .dpers import DPERS
 from .imputer import DIMVImputation 
