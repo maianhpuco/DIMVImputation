@@ -50,11 +50,8 @@ class DPERS:
         # Upper triangle indices
         upper_idx = list(zip(*np.triu_indices(p, 1)));
 
-        if n_jobs == None:
-            if (n*p)>= 10000: 
-                n_jobs = mp.cpu_count()
-            else:
-                n_jobs = 1 
+        if n_jobs is None:
+            n_jobs = mp.cpu_count() if n*p >= 10000 else 1 
 
         if n_jobs==1:
             upper_triag = []
@@ -134,11 +131,3 @@ class DPERS:
                 ) - (S_jj - 2 * roots / S_ii * s12 + roots**2 / S_ii**2 * s11)/scond
         return roots[np.argmax(etas)];
 
-
-if __name__ == "__main__":
-    
-    X = np.random.rand(1000, 110)
-    X[::5, :] = np.nan 
-
-    S = DPERS().fit(X, n_jobs=3)
-    print(S)
