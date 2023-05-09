@@ -1,7 +1,8 @@
 import numpy as np
 from typing import *
 from tqdm import tqdm
-
+import multiprocessing as mp 
+from multiprocessing import Pool 
 
 class DPERS:
     def __init__(self):
@@ -16,7 +17,7 @@ class DPERS:
     Attributes:
         None
     """    
-    def fit(self, X:np.ndarray)->np.ndarray:
+    def fit(self, X:np.ndarray, n_jobs=None)->np.ndarray:
         """
         Estimates the covariance matrix of a given dataset with missing values.
 
@@ -27,9 +28,13 @@ class DPERS:
             np.ndarray: A 2D numpy array representing the estimated covariance matrix.
         """
         X = X.astype(np.float64)
-        
-        
-        assert isinstance(X, np.ndarray) and np.ndim(X) == 2, ValueError("Expected 2D numpy array")
+        # remove entry with all missing value
+        missing_rows = np.isnan(X).all(axis=1) 
+        X = X[~missing_rows] 
+
+
+        assert isinstance(X, np.ndarray) and np.ndim(X) == 2, \
+                ValueError("Expected 2D numpy array")
         self.Xtrain = X  
         n, p = X.shape 
     
@@ -41,49 +46,59 @@ class DPERS:
             x_i = X[:, i];
             x_i = x_i[~np.isnan(x_i)]
             S[i, i] = np.var(x_i) 
-    
+        
         # Upper triangle indices
         upper_idx = list(zip(*np.triu_indices(p, 1)));
-    
-    
-        # Calculate the upper triangle matrix of S
-        for (i, j) in tqdm(upper_idx):
-            X_ij = X[:, [i, j]]
-            
-            # remove entry with all missing value
-            missing_idx = np.isnan(X_ij).all(1)
-            X_ij = X_ij[~missing_idx]
-    
-            S_ii, S_jj = S[i, i], S[j, j]
-            if (S_ii != 0) and (S_jj !=0 ):
-                S[i, j] = self.find_cov_ij(X_ij, S_ii, S_jj);
+
+        if n_jobs == None:
+            if (n*p)>= 10000: 
+                n_jobs = mp.cpu_count()
             else:
-                S[i, j] = np.nan
-    
+                n_jobs = 1 
+
+        if n_jobs==1:
+            upper_triag = []
+            for i, j in upper_idx:
+                upper_triag.append(self.find_cov_ij(i, j, S[i, i], S[j, j], X))
+        else:
+            with Pool(processes=n_jobs) as pool:   
+                upper_triag = []
+                with tqdm(total=len(upper_idx)) as pbar:
+                    for result in pool.starmap(
+                            self.find_cov_ij, 
+                            [(i, j, S[i, i], S[j, j], X) for (i, j) in upper_idx]):
+                        upper_triag.append(result)
+                        pbar.update(1) 
+        for idx, (i, j) in enumerate(upper_idx):
+            S[i, j] = upper_triag[idx]
+
         S = S + S.T
-    
         # Halving the diagonal line;
         for i in range(p):
             S[i,i] = S[i,i] * .5
             
         self.cov = S
-        
-        return S
-        
-    
-    def find_cov_ij(self, X_ij:np.ndarray, S_ii:float, S_jj:float)->float:
+        return S 
+       
+    @staticmethod
+    def find_cov_ij(i: int, j: int, S_ii: int, S_jj: int, X: np.ndarray) -> float:
         """Estimates the covariance between two features with missing values.
 
         Args:
-            X_ij (np.ndarray): A 2D numpy array of shape (n_samples, 2) representing the dataset
-                with missing values.
-            S_ii (float): The variance of the first feature.
-            S_jj (float): The variance of the second feature.
+            i, j (int): index of the upper triangle covariance matrix  
+            S_ii, S_jj (int): diagonal of covariance matrix at position i and respectively 
+            X (np.ndarray): The input matrix 
 
         Returns:
             float: The estimated covariance between the two features.
         """
-     
+
+        X_ij = X[:, [i, j]]
+        X_ij = X[:, [i, j]]
+        #if (S_ii != 0) and (S_jj !=0 ):
+            #return self.find_cov_ij(X_ij, S_ii, S_jj);
+        if (S_ii == 0) or (S_jj == 0 ):
+            return np.nan 
     
         # Number of entries without any missing value
         idx = ~np.isnan(X_ij).any(-1);
@@ -118,3 +133,12 @@ class DPERS:
                 where=(scond>0)
                 ) - (S_jj - 2 * roots / S_ii * s12 + roots**2 / S_ii**2 * s11)/scond
         return roots[np.argmax(etas)];
+
+
+if __name__ == "__main__":
+    
+    X = np.random.rand(1000, 110)
+    X[::5, :] = np.nan 
+
+    S = DPERS().fit(X, n_jobs=3)
+    print(S)
