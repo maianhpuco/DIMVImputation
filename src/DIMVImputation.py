@@ -69,8 +69,8 @@ class DIMVImputation:
 
     def cross_validate(
         self,
-        alphas: List[float] = [0.0, 0.01, 0.1, 1.0, 10.0, 100.0],
-        train_percent: float = 1,
+        alphas: List[float],
+        train_percent: float,
         features_corr_threshold: float = 0,
         mlargest_features: int = 1
     ) -> Dict[str, Union[float, List[float]]]:
@@ -88,9 +88,12 @@ class DIMVImputation:
         """
         #set cv_mode = True
         self.cv_mode = True 
-        
-        # if  alphas is None: 
-        #     alphas = np.append(0, np.logspace(-2, 2, 5)).tolist()
+
+        if train_percent is None:
+            train_percent = 1 
+
+        if  alphas is None: 
+             alphas = [0.0, 0.01, 0.1, 1.0, 10.0, 100.0]
         
         print("Start Cross Validation with alphas = {} and {} % of training set".format(alphas, train_percent*100))
         assert (train_percent <= 1 and train_percent > 0.1), " train_percent must be in range(0.1, 1] "
@@ -195,7 +198,8 @@ class DIMVImputation:
             X_input: np.ndarray, 
             alpha: np.ndarray = 0,
             run_cross_validation: bool = True,
-            train_percent: float = 1.0,
+            train_percent_cv: float = 1.0,
+            alphas_cv: List = None,
             features_corr_threshold = None, 
             mlargest_features = None 
             ) -> np.ndarray:  
@@ -229,8 +233,8 @@ class DIMVImputation:
 
         if run_cross_validation == True: 
             cv = self.cross_validate(
-                alphas, 
-                train_percent, 
+                alphas_cv, 
+                train_percent_cv, 
                 features_corr_threshold=features_corr_threshold, 
                 mlargest_features = mlargest_features)
             alpha = cv.get('best_alpha') 
