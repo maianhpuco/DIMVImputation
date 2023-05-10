@@ -144,7 +144,7 @@ class DIMVImputation:
         results = {"best_alpha" :best_alpha, "cv_scores": scores} 
         #turn off the cross-validation mode: cv_mode 
         self.cv_mode = False 
-        return results 
+        return best_alpha 
 
     def filter_features(
         self, 
@@ -197,9 +197,9 @@ class DIMVImputation:
             self, 
             X_input: np.ndarray, 
             alpha: np.ndarray = 0,
-            run_cross_validation: bool = True,
-            train_percent_cv: float = 1.0,
-            alphas_cv: List = None,
+            #run_cross_validation: bool = True,
+            #train_percent_cv: float = 1.0,
+            #alphas_cv: List = None,
             features_corr_threshold = None, 
             mlargest_features = None 
             ) -> np.ndarray:  
@@ -231,15 +231,6 @@ class DIMVImputation:
             if mlargest_features is None:
                 mlargest_features = 1
 
-        if run_cross_validation == True: 
-            cv = self.cross_validate(
-                alphas_cv, 
-                train_percent_cv, 
-                features_corr_threshold=features_corr_threshold, 
-                mlargest_features = mlargest_features)
-            alpha = cv.get('best_alpha') 
-
-            print("After running cross validation, use the best alpha values: {}".format(alpha))
         #scaling by mean and std of train set 
         X_test_norm, _, _ = normalize(X_input, mean=self.train_mean, std=self.train_std)
         
