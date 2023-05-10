@@ -4,7 +4,7 @@ from typing import *
 from dpers import DPERS 
 from conditional_expectation import RegularizedConditionalExpectation 
 import numpy as np
-from utils import normalize, find_largest_elements, rmse_loss
+from utils import normalize, find_largest_elements, rmse_loss, rescale
 
 class DIMVImputation:
     """ Imputation class that use conditional expectation to fill the missing data position
