@@ -193,7 +193,8 @@ class DIMVImputation:
     def transform(
             self, 
             X_input: np.ndarray, 
-            alpha: np.ndarray = 0, 
+            alpha: np.ndarray = 0,
+            run_cross_validation: bool = True,
             train_percent: float = 1.0,
             features_corr_threshold = None, 
             mlargest_features = None 
