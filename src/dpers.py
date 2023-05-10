@@ -51,9 +51,13 @@ class DPERS:
         upper_idx = list(zip(*np.triu_indices(p, 1)));
 
         if n_jobs is None:
-            n_jobs = mp.cpu_count() if n*p >= 10000 else 1 
+            n_jobs = 1 
+
+        if n_jobs = -1:
+            n_jobs = mp.cpu_count()
 
         if n_jobs==1:
+
             upper_triag = []
             for i, j in upper_idx:
                 upper_triag.append(self.find_cov_ij(i, j, S[i, i], S[j, j], X))

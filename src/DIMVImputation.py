@@ -91,11 +91,12 @@ class DIMVImputation:
         self.cv_mode = True 
 
         if train_percent is None:
-            train_percent = 1 
+            train_percent = 1.0 
 
         if  alphas is None: 
              alphas = [0.0, 0.01, 0.1, 1.0, 10.0, 100.0]
-        
+
+        print(alphas) 
         print("Start Cross Validation with alphas = {} and {} % of training set".format(alphas, train_percent*100))
         assert (train_percent <= 1 and train_percent > 0.05), " train_percent must be in range(0.1, 1] "
 
@@ -116,7 +117,8 @@ class DIMVImputation:
         observed_mask = ~np.isnan(X_cv)
 
         for alpha in alphas:
-            print("Running Cross Validation, alpha = ".format(alpha)) 
+            print("Running Cross Validation, alpha={}".format(alpha)) 
+
             try:
                 X_cv_imputed = self.transform(
                     X_cv, 
