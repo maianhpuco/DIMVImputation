@@ -96,7 +96,6 @@ class DIMVImputation:
         if  alphas is None: 
              alphas = [0.0, 0.01, 0.1, 1.0, 10.0, 100.0]
 
-        print(alphas) 
         print("Start Cross Validation with alphas = {} and {} % of training set".format(alphas, train_percent*100))
         assert (train_percent <= 1 and train_percent > 0.05), " train_percent must be in range(0.1, 1] "
 
