@@ -100,7 +100,7 @@ class DIMVImputation:
 
         Xtrain = self.Xtrain
         
-        scores = [] 
+        scores = {}
         n = self.Xtrain.shape[0]
         
         shuffle_idxes = np.arange(n)
@@ -124,9 +124,9 @@ class DIMVImputation:
 
                 score = rmse_loss(X_cv, X_cv_imputed) 
                 #X_cv contain nan value, only computer score at not NaN position (not using initialize as 0 position when initialized=True)
-                print("RMSE at alpha {} is {}".format(alpha, score))
+                #print("RMSE at alpha {} is {}".format(alpha, score))
 
-                scores.append(score)
+                scores.update({alpha: score})
 
                 if score < best_score:
                     best_score = score
@@ -224,8 +224,17 @@ class DIMVImputation:
             assert 0 <= features_corr_threshold <= 1, \
                 "Value must be between 0 and 1"  
             if mlargest_features is None:
-                mlargest_features = 1 
+                mlargest_features = 1
 
+        if run_cross_validation == True: 
+            cv = self.cross_validate(
+                alphas, 
+                train_percent, 
+                features_corr_threshold=features_corr_threshold, 
+                mlargest_features = mlargest_features)
+            alpha = cv.get('best_alpha') 
+
+            print("After running cross validation, use the best alpha values: {}".format(alpha)
         #scaling by mean and std of train set 
         X_test_norm, _, _ = normalize(X_input, mean = self.train_mean, std = self.train_std)
         
