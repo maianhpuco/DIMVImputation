@@ -48,7 +48,7 @@ class DIMVImputation:
         self.best_alpha = None 
         self.cv_score = None 
         
-    def fit(self, X: np.ndarray, initializing: bool = False) -> None:
+    def fit(self, X: np.ndarray, initializing: bool = False, n_jobs=None) -> None:
         """
         Fit the imputation model on the given training data.
 
@@ -59,13 +59,14 @@ class DIMVImputation:
         self.initializing = initializing
         self.Xtrain = X
         self.X_train_norm, self.train_mean, self.train_std = normalize(X, X)
-        self.cov = DPERS().fit(self.X_train_norm)
+        self.cov = DPERS().fit(self.X_train_norm, n_jobs=n_jobs)
         self.no_0_var_mask = np.diag(self.cov) != 0
         self.cov_no_zeros = self.cov[self.no_0_var_mask, :][:, self.no_0_var_mask]
         self.estimator = RegularizedConditionalExpectation(cov=self.cov_no_zeros, initializing=self.initializing)
         self.best_alpha = None
         self.cv_score = None
         self.cv_mode = False
+
 
     def cross_validate(
         self,
@@ -96,7 +97,7 @@ class DIMVImputation:
              alphas = [0.0, 0.01, 0.1, 1.0, 10.0, 100.0]
         
         print("Start Cross Validation with alphas = {} and {} % of training set".format(alphas, train_percent*100))
-        assert (train_percent <= 1 and train_percent > 0.1), " train_percent must be in range(0.1, 1] "
+        assert (train_percent <= 1 and train_percent > 0.05), " train_percent must be in range(0.1, 1] "
 
         best_score = np.inf
         best_alpha = None
