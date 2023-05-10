@@ -53,7 +53,7 @@ class DPERS:
         if n_jobs is None:
             n_jobs = 1 
 
-        if n_jobs = -1:
+        if n_jobs == -1:
             n_jobs = mp.cpu_count()
 
         if n_jobs==1:
