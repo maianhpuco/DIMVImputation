@@ -235,9 +235,9 @@ class DIMVImputation:
                 mlargest_features = mlargest_features)
             alpha = cv.get('best_alpha') 
 
-            print("After running cross validation, use the best alpha values: {}".format(alpha)
+            print("After running cross validation, use the best alpha values: {}".format(alpha))
         #scaling by mean and std of train set 
-        X_test_norm, _, _ = normalize(X_input, mean = self.train_mean, std = self.train_std)
+        X_test_norm, _, _ = normalize(X_input, mean=self.train_mean, std=self.train_std)
         
         X            = X_test_norm[:, self.no_0_var_mask]
         missing_data = X_test_norm[:, self.no_0_var_mask]
