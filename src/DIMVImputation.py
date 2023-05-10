@@ -23,7 +23,7 @@ class DIMVImputation:
         self.best_alpha = None
         self.cv_score = None
         
-    def fit(self, X: np.ndarray, initializing: bool= False) -> None:
+    def fit(self, X: np.ndarray, initializing: bool= False, n_jobs = None) -> None:
         """
         Imputation class that use conditional expectation to fill the missing data position
         The covariance matrix would be computed by the DPER algorithm 
@@ -31,13 +31,13 @@ class DIMVImputation:
         Args:
             X (np.ndarray): Xtrain, dataset used to computer the covariance matrix 
             initializing (bool, optional): Defaults to False; when  initializing is set as True, the missing position would be all initialize by 0 (also the mean of the scaled)
-            
+            n_jobs : umber of parallel jobs to run the covariance computation 
         """
         self.initializing = initializing 
         self.Xtrain = X
         self.X_train_norm, self.train_mean, self.train_std = normalize(X, X)
 
-        self.cov = DPERS().fit(self.X_train_norm)
+        self.cov = DPERS().fit(self.X_train_norm, j_jobs = n_jobs)
         self.no_0_var_mask = np.diag(self.cov)!=0
 
         self.cov_no_zeros = self.cov[self.no_0_var_mask, :][:, self.no_0_var_mask]
