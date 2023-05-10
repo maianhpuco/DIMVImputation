@@ -69,8 +69,8 @@ class DIMVImputation:
 
     def cross_validate(
         self,
-        alphas: List[float],
-        train_percent: float,
+        alphas: List[float]=None,
+        train_percent: float=None,
         features_corr_threshold: float = 0,
         mlargest_features: int = 1
     ) -> Dict[str, Union[float, List[float]]]:
