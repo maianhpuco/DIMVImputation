@@ -224,7 +224,7 @@ class DIMVImputation:
         if self.initializing == True:
             X[np.isnan(X)] = 0  
 
-        missing_ftss = np.where(np.isnan(X).any(axis=0))[0]
+        missing_ftss = np.where(np.isnan(X_input).any(axis=0))[0]
 
         X_imp_normed = np.zeros_like(X, dtype='float') 
     
