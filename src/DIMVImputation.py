@@ -224,8 +224,8 @@ class DIMVImputation:
         if self.initializing == True:
             X[np.isnan(X)] = 0  
 
-        _, m  = X.shape
-        
+        missing_ftss = np.where(np.isnan(X).any(axis=0))[0]
+
         X_imp_normed = np.zeros_like(X, dtype='float') 
     
         #check cross_validation only exist if initialize = True 
@@ -235,7 +235,7 @@ class DIMVImputation:
 
         S = self.cov_no_zeros
 
-        for idx in tqdm(range(m)):
+        for idx in tqdm(missing_ftss):
             
             if self.initializing == True or self.cv_mode == True:
                 all_values = np.arange(X[:, idx].shape[0])
