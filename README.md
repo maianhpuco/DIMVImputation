@@ -35,8 +35,7 @@ The contents of this repo can be described as follows. ```/src``` folders:
 pip install -r requirements.txt 
 ```
 
-- Step3 : Fit on train set 
-We Compute the covariance matrix using fit function 
+- Step3 : Fit on train set to compute the covariance matrix using DPER algorithm 
 ```
 from DIMVImputation import DIMVImputation
 
@@ -55,14 +54,19 @@ X_test_miss = missing_data[split_index:, :]
 
 ```  
 
-Then fitting DIMV on the train set to compute the covariance matrix, then use cross validation to search for optimal value for reguralization value $\alpha$
 
 ``` 
 from DIMVImputation.DIMVImputation import DIMVImputation 
 imputer = DIMVImputation()
-imputer.fit(X_train_miss, initializing=False, n_jobs=1)
+imputer.fit(X_train_miss, initializing=False, n_jobs=1) 
+```
 
-imputer.cross_validate(train_percent=1, alphas = [0.0, 0.01, 0.1, 1.0, 10.0, 100.0] ) # default value for alpha = [0.0, 0.01, 0.1, 1.0, 10.0, 100.0] 
+Then use cross validation to search for optimal value for reguralization value $\alpha$ and finally tranform the missing data X_test_miss 
+
+```
+imputer.cross_validate(train_percent=1, alphas = [0.0, 0.01, 0.1, 1.0, 10.0, 100.0] ) 
+# default value for alpha = [0.0, 0.01, 0.1, 1.0, 10.0, 100.0] 
+
 X_test_imp = imputer.transform(X_test_miss) 
 ```
  
