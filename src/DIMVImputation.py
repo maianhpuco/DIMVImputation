@@ -37,7 +37,7 @@ class DIMVImputation:
         self.Xtrain = X
         self.X_train_norm, self.train_mean, self.train_std = normalize(X, X)
 
-        self.cov = DPERS().fit(self.X_train_norm, j_jobs = n_jobs)
+        self.cov = DPERS().fit(self.X_train_norm, n_jobs = n_jobs)
         self.no_0_var_mask = np.diag(self.cov)!=0
 
         self.cov_no_zeros = self.cov[self.no_0_var_mask, :][:, self.no_0_var_mask]
@@ -47,26 +47,8 @@ class DIMVImputation:
                 initializing = self.initializing) 
         self.best_alpha = None 
         self.cv_score = None 
-        
-    def fit(self, X: np.ndarray, initializing: bool = False, n_jobs=None) -> None:
-        """
-        Fit the imputation model on the given training data.
-
-        Args:
-            X (np.ndarray): Training data.
-            initializing (bool, optional): Whether to initialize missing values to zero. Defaults to False.
-        """
-        self.initializing = initializing
-        self.Xtrain = X
-        self.X_train_norm, self.train_mean, self.train_std = normalize(X, X)
-        self.cov = DPERS().fit(self.X_train_norm, n_jobs=n_jobs)
-        self.no_0_var_mask = np.diag(self.cov) != 0
-        self.cov_no_zeros = self.cov[self.no_0_var_mask, :][:, self.no_0_var_mask]
-        self.estimator = RegularizedConditionalExpectation(cov=self.cov_no_zeros, initializing=self.initializing)
-        self.best_alpha = None
-        self.cv_score = None
         self.cv_mode = False
-
+        
 
     def cross_validate(
         self,
@@ -242,8 +224,8 @@ class DIMVImputation:
         if self.initializing == True:
             X[np.isnan(X)] = 0  
 
-        _, m  = X.shape
-        
+        missing_ftss = np.where(np.isnan(missing_data).any(axis=0))[0]
+
         X_imp_normed = np.zeros_like(X, dtype='float') 
     
         #check cross_validation only exist if initialize = True 
@@ -253,7 +235,7 @@ class DIMVImputation:
 
         S = self.cov_no_zeros
 
-        for idx in tqdm(range(m)):
+        for idx in tqdm(missing_ftss):
             
             if self.initializing == True or self.cv_mode == True:
                 all_values = np.arange(X[:, idx].shape[0])
