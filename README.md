@@ -52,8 +52,9 @@ missing_data = create_randomly_missing(data, missing_rate)
 test_size = .2
 split_index = int(len(missing_data) * (1 - test_size))
 X_train_ori, X_test_ori = data[:split_index, :], data[split_index:, :]
-X_train_miss, X_test_miss = missing_data[:split_index, :], missing_data[
-    split_index:, :]  
+X_train_miss = missing_data[:split_index, :]
+X_test_miss = missing_data[split_index:, :]  
+
 ```  
 
 Then fitting DIMV on the train set to compute the covariance matrix, then use cross validation to search for optimal value for reguralization value $\alpha$
