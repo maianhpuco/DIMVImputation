@@ -65,7 +65,10 @@ def rescale(X: np.ndarray, mean: np.ndarray, std: np.ndarray) -> np.ndarray:
     return (X * std) + mean
 
 
-def create_image_monotone_missing(data: np.ndarray, perc_del: float, perc_width: float, perc_height: float, im_width: int, im_height: int) -> Tuple[np.ndarray, np.ndarray]:
+def create_image_monotone_missing(
+        data: np.ndarray, perc_del: float, perc_width: float,
+        perc_height: float, im_width: int,
+        im_height: int) -> Tuple[np.ndarray, np.ndarray]:
     """    
     Creates a monotone missing pattern in an image dataset by removing a section of the image from the bottom right corner.
 
@@ -88,10 +91,10 @@ def create_image_monotone_missing(data: np.ndarray, perc_del: float, perc_width:
     p = im_width * im_height
 
     # position (from width and height) of pixel would be deleted
-    from_width = math.ceil((1-perc_width)*im_width)-1
-    from_height = math.ceil((1-perc_width)*im_width)-1
+    from_width = math.ceil((1 - perc_width) * im_width) - 1
+    from_height = math.ceil((1 - perc_width) * im_width) - 1
 
-    nan_rows = np.unique(np.sort(np.random.randint(0, n, int(n*perc_del))))
+    nan_rows = np.unique(np.sort(np.random.randint(0, n, int(n * perc_del))))
     nan_rows = nan_rows[:, np.newaxis]
 
     col_idxs = np.arange(p).reshape(-1, m)
@@ -120,11 +123,11 @@ def create_randomly_missing(data: np.ndarray, perc_del: float) -> np.ndarray:
         np.ndarray: An array with the same shape as `data` where missing values are marked as NaN.
     """
     n = data.shape[0]
-    # Flatten data into 1 row 
+    # Flatten data into 1 row
     flatten_data = data.reshape(1, -1)
-    # Uniform missing mask 
-    missing_mask = np.random.uniform(0, 1, flatten_data.shape[1]).reshape(1, -1) 
-    # Mark as missing if value in mask  < perc_del 
+    # Uniform missing mask
+    missing_mask = np.random.uniform(0, 1, flatten_data.shape[1]).reshape(1, -1)
+    # Mark as missing if value in mask  < perc_del
     missing_data = flatten_data.copy().astype('float')
     missing_data[missing_mask <= perc_del] = np.nan
 
@@ -145,14 +148,15 @@ def rmse_loss(a: np.ndarray, b: np.ndarray) -> float:
     subtracted = a - b
     nan_mask = np.isnan(subtracted)
     subtracted[nan_mask] = 0
-    numerator = np.sum(subtracted ** 2)
+    numerator = np.sum(subtracted**2)
 
     denominator_m = np.ones_like(a)
     denominator_m[nan_mask] = 0
     denominator = np.sum(denominator_m)
 
     rmse = np.sqrt(numerator / float(denominator))
-    return rmse 
+    return rmse
+
 
 def find_largest_elements(s_missing_fts, s_avai_fts, arr, m):
     """
@@ -167,11 +171,10 @@ def find_largest_elements(s_missing_fts, s_avai_fts, arr, m):
     Returns:
         np.ndarray: A boolean array indicating whether each element in arr is one of the m largest elements.    
     """
-    
+
     # import pdb; pdb.set_trace()
     arr[s_missing_fts] = -np.inf
     arr[~s_avai_fts] = -np.inf
-    
 
     # Get the indices of the m largest elements
     indices_sorted_descending = np.argsort(arr)[::-1]
