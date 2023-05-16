@@ -37,7 +37,7 @@ The contents of this repo can be described as follows. ```/src``` folders:
 pip install -r requirements.txt 
 ```
 
-Step3 : Fit on train set 
+- Step3 : Fit on train set 
 We Compute the covariance matrix using fit function 
 ```
 from DIMVImputation import DIMVImputation
