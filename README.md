@@ -62,7 +62,7 @@ from DIMVImputation.DIMVImputation import DIMVImputation
 imputer = DIMVImputation()
 imputer.fit(X_train_miss, initializing=False, n_jobs=1)
 
-imputer.cross_validate(train_percent=1) # default value for alpha is [0.0, 0.01, 0.1, 1.0, 10.0, 100.0] 
+imputer.cross_validate(train_percent=1, alphas = [0.0, 0.01, 0.1, 1.0, 10.0, 100.0] ) # default value for alpha = [0.0, 0.01, 0.1, 1.0, 10.0, 100.0] 
 X_test_imp = imputer.transform(X_test_miss) 
 ```
  
