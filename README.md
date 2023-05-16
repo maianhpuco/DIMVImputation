@@ -41,14 +41,18 @@ from DIMVImputation import DIMVImputation
 
 #For example we have a missing dataset to impute   
 data = np.random.randint(0, 100, size=(100, 30)).astype('float64')
+
 missing_rate = 0.5
 missing_data = create_randomly_missing(data, missing_rate)
+
 
 
 #Create train test split
 test_size = .2
 split_index = int(len(missing_data) * (1 - test_size))
+
 X_train_ori, X_test_ori = data[:split_index, :], data[split_index:, :]
+
 X_train_miss = missing_data[:split_index, :]
 X_test_miss = missing_data[split_index:, :]  
 
@@ -58,7 +62,7 @@ X_test_miss = missing_data[split_index:, :]
 ``` 
 from DIMVImputation.DIMVImputation import DIMVImputation 
 imputer = DIMVImputation()
-imputer.fit(X_train_miss, initializing=False, n_jobs=1) 
+imputer.fit(X_train_miss, initializing=False) 
 ```
 
 Then use cross validation to search for optimal value for reguralization value $\alpha$ and finally tranform the missing data X_test_miss 
