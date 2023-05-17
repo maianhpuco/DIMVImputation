@@ -24,11 +24,13 @@ The codes are structured as follows:
  
 
 In ```/src``` folders:
+
     - ```DIMVImputation.py``` implements DIMV imputation algorithm for imputing for missing data. 
     - ``` dpers.py``` that implements the DPER algorithm for computing the covariance matrix used in the DIMV (Conditional expectation with regularization for missing data imputation) algorithm. (input is a normalized input matrix). 
     - ```conditional_expectation.py``` contains the computation for the regularized conditional expectation for a sliced position in the dataset, given the covariance matrix. 
     
 - ```example.ipynb``` is a Jupyter Notebook file that contains examples demonstrating how to use the functionalities and methods. 
+
 
 ## Usage: 
 ### Installation: Install from source: 
@@ -42,6 +44,7 @@ pip install -r requirements.txt
 ```
 
 ** Option 2: **  Install with pip
+
 ```
 pip install git+<repository-html-url> 
 ``` 
@@ -49,6 +52,7 @@ pip install git+<repository-html-url>
 
 The ```.fit()``` function applied on train set to compute the covariance matrix. The convariance matrix is computed from the train set. 
 
+Create a sample dataset: 
 ```
 #For example we have a missing dataset to impute   
 data = np.random.randint(0, 100, size=(100, 30)).astype('float64')
@@ -68,6 +72,7 @@ X_test_miss = missing_data[split_index:, :]
 
 ```  
 
+Fit the model on train set: 
 ``` 
 from DIMVImputation.DIMVImputation import DIMVImputation 
 imputer = DIMVImputation()
