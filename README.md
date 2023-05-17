@@ -41,8 +41,6 @@ pip install -r requirements.txt
 
 - Step3 : Fit on train set to compute the covariance matrix using DPER algorithm 
 ```
-from DIMVImputation import DIMVImputation
-
 #For example we have a missing dataset to impute   
 data = np.random.randint(0, 100, size=(100, 30)).astype('float64')
 
