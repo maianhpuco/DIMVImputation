@@ -12,7 +12,6 @@ The codes are structured as follows:
 ├── README.md
 ├── example.ipynb
 ├── requirements.txt
-├── setup.py
 └── src
     ├── DIMVImputation.py
     ├── __init__.py
