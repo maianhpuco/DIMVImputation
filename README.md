@@ -35,8 +35,6 @@ In ```/src``` folders:
 ## Usage: 
 ### Installation: Install from source: 
 
-#### Option 1: Install from source. 
-
 - Step 1: Clone the repository 
 
 ```git clone <repository-url>``` 
@@ -48,11 +46,6 @@ Then, create a virtual environment and activate the environment.
 pip install -r requirements.txt 
 ```
 
-#### Option 2: Install with pip. 
-
-```
-pip install git+https://github.com/<username>/<repository>.git
-``` 
 ### Model fitting: 
 
 The ```.fit()``` function applied on train set to compute the covariance matrix. The convariance matrix is computed from the train set. 
