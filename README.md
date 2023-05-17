@@ -1,7 +1,7 @@
 
 # Conditional expectation with regularization for missing data imputation (DIMV) 
 
-This repo contains the codebase for the following paper: "Conditional expectation with regularization for missing data imputation (DIMV) ". This paper is under review at the conference NeurIPS 2023.
+The code repository associated with the paper: "Conditional expectation with regularization for missing data imputation". This paper is under evaluation for presentation at the NeurIPS 2023 conference.
 
 
 ## Contents:
@@ -24,30 +24,37 @@ The codes are structured as follows:
  
 
 In ```/src``` folders:
-    - ```DIMVImputation.py``` implements DIMV imputation algorithm. 
-    - ``` dpers.py``` implements DPER algorithm implementation for a normalizeed dataset, which computing the covariance matrix used in the DIMV algorithm. 
-    - ```conditional_expectation.py``` containing implemtation for the computation for the regularized conditional expectation for a sliced position in the dataset given the covariance matrix. 
-- ```example.ipynb``` contain example to use tis repository. 
+    - ```DIMVImputation.py``` implements DIMV imputation algorithm for imputing for missing data. 
+    - ``` dpers.py``` that implements the DPER algorithm for computing the covariance matrix used in the DIMV (Conditional expectation with regularization for missing data imputation) algorithm. (input is a normalized input matrix). 
+    - ```conditional_expectation.py``` contains the computation for the regularized conditional expectation for a sliced position in the dataset, given the covariance matrix. 
+    
+- ```example.ipynb``` is a Jupyter Notebook file that contains examples demonstrating how to use the functionalities and methods. 
 
 ## Usage: 
+### Installation: Install from source: 
 
-- Step 1: Create a virtual environment named "env" and activate the environment 
-- Step 2: Install the libraries from the "requirements.txt" file. 
-
-``` 
+** Option 1: ** 
+- Step 1: Clone the repository and reate a virtual environment named "env" and activate the environment 
+```git clone <repository-url>``` 
+- Step 2: Install the libraries from the "requirements.txt" file.  
+```
 pip install -r requirements.txt 
 ```
 
-- Step3 : Fit on train set to compute the covariance matrix using DPER algorithm 
+** Option 2: **  Install with pip
 ```
-from DIMVImputation import DIMVImputation
+pip install git+<repository-html-url> 
+``` 
+### Model fitting: 
 
+The ```.fit()``` function applied on train set to compute the covariance matrix. The convariance matrix is computed from the train set. 
+
+```
 #For example we have a missing dataset to impute   
 data = np.random.randint(0, 100, size=(100, 30)).astype('float64')
 
 missing_rate = 0.5
 missing_data = create_randomly_missing(data, missing_rate)
-
 
 
 #Create train test split
@@ -61,19 +68,19 @@ X_test_miss = missing_data[split_index:, :]
 
 ```  
 
-
 ``` 
 from DIMVImputation.DIMVImputation import DIMVImputation 
 imputer = DIMVImputation()
 imputer.fit(X_train_miss, initializing=False) 
 ```
 
-Then use cross validation to search for optimal value for reguralization value $\alpha$ and finally tranform the missing data X_test_miss 
+Then use ```.cross_validate()``` to grid search for optimal value for reguralization value $\alpha$ and finally tranform the missing data ```X_test_miss``` 
 
 ```
 imputer.cross_validate(train_percent=1, alphas = [0.0, 0.01, 0.1, 1.0, 10.0, 100.0] ) 
 # default value for alpha = [0.0, 0.01, 0.1, 1.0, 10.0, 100.0] 
 
 X_test_imp = imputer.transform(X_test_miss) 
+
 ```
  
