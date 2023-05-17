@@ -37,9 +37,13 @@ In ```/src``` folders:
 
 #### Option 1: Install from source. 
 
-- Step 1: Clone the repository and reate a virtual environment named "env" and activate the environment 
+- Step 1: Clone the repository 
+
 ```git clone <repository-url>``` 
+Then, create a virtual environment and activate the environment. 
+
 - Step 2: Install the libraries from the "requirements.txt" file.  
+
 ```
 pip install -r requirements.txt 
 ```
