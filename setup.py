@@ -6,7 +6,7 @@ with open('requirements.txt') as f:
 setup(
     name='DIMVImputation',
     version='0.1.0',
-    description='My awesome DIMVImputation package',
+    description='DIMVImputation package',
     url='https://github.com/maianh.puco/DIMVImputation.git',
 #     author='Your Name',
 #     author_email='your@email.com',
