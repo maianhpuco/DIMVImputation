@@ -49,15 +49,8 @@ pip install -r requirements.txt
 
 The ```.fit()``` function applied on train set to compute the covariance matrix. The convariance matrix is computed from the train set. 
 
-Create a sample dataset: 
+Create a sample dataset as a numpy array ```missing_data``` 
 ```
-#For example we have a missing dataset to impute   
-data = np.random.randint(0, 100, size=(100, 30)).astype('float64')
-
-missing_rate = 0.5
-missing_data = create_randomly_missing(data, missing_rate)
-
-
 #Create train test split
 test_size = .2
 split_index = int(len(missing_data) * (1 - test_size))
