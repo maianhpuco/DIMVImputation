@@ -24,10 +24,11 @@ The codes are structured as follows:
  
 
 In ```/src``` folders:
-    - ```DIMVImputation.py``` implements DIMV imputation algorithm. 
-    - ``` dpers.py``` implements DPER algorithm implementation for a normalizeed dataset, which computing the covariance matrix used in the DIMV algorithm. 
-    - ```conditional_expectation.py``` containing implemtation for the computation for the regularized conditional expectation for a sliced position in the dataset given the covariance matrix. 
-- ```example.ipynb``` contain example to use tis repository. 
+- ```DIMVImputation.py``` implements DIMV imputation algorithm. 
+- ``` dpers.py``` implements DPER algorithm implementation for a normalizeed dataset, which computing the covariance matrix used in the DIMV algorithm. 
+- ```conditional_expectation.py``` containing implemtation for the computation for the regularized conditional expectation for a sliced position in the dataset given the covariance matrix. 
+
+The ```example.ipynb``` contain example to use tis repository. 
 
 ## Usage: 
 
