@@ -52,7 +52,6 @@ pip install -r requirements.txt
 
 ```
 pip install git+https://github.com/<username>/<repository>.git
- 
 ``` 
 ### Model fitting: 
 
@@ -75,7 +74,6 @@ X_train_ori, X_test_ori = data[:split_index, :], data[split_index:, :]
 
 X_train_miss = missing_data[:split_index, :]
 X_test_miss = missing_data[split_index:, :]  
-
 ```  
 
 Fit the model on train set: 
@@ -92,6 +90,5 @@ imputer.cross_validate(train_percent=1, alphas = [0.0, 0.01, 0.1, 1.0, 10.0, 100
 # default value for alpha = [0.0, 0.01, 0.1, 1.0, 10.0, 100.0] 
 
 X_test_imp = imputer.transform(X_test_miss) 
-
 ```
  
