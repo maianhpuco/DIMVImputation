@@ -35,7 +35,8 @@ In ```/src``` folders:
 ## Usage: 
 ### Installation: Install from source: 
 
-** Option 1: ** 
+#### Option 1: Install from source. 
+
 - Step 1: Clone the repository and reate a virtual environment named "env" and activate the environment 
 ```git clone <repository-url>``` 
 - Step 2: Install the libraries from the "requirements.txt" file.  
@@ -43,10 +44,11 @@ In ```/src``` folders:
 pip install -r requirements.txt 
 ```
 
-** Option 2: **  Install with pip
+#### Option 2: Install with pip. 
 
 ```
-pip install git+<repository-html-url> 
+pip install git+https://github.com/<username>/<repository>.git
+ 
 ``` 
 ### Model fitting: 
 
