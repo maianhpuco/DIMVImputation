@@ -3,10 +3,10 @@
 
 This is an **imputation package for missing data**, which can be easily install with pip. 
 
-The code repository associated with the paper: "Conditional expectation with regularization for missing data imputation." This paper is under evaluation for the journal you can find it at (![DIMV](https://arxiv.org/abs/2302.00911))
+The code repository associated with the paper: "Conditional expectation with regularization for missing data imputation." This paper is under evaluation for the journal you can find it at https://arxiv.org/abs/2302.00911 
 
 # Introduction:
-Conditional Distribution-based Imputation of Missing Values with Regularization (![DIMV](https://arxiv.org/abs/2302.00911)): An algorithm for imputing missing data with low RMSE, scalability, and explainability. Ideal for critical domains like medicine and finance, DIMV offers reliable analysis, approximated confidence regions, and robustness to assumptions, making it a versatile choice for data imputation. DIMV is under the assumption that it relies on the normally distributed assumption as part of its theoretical foundation. The assumption of normality is often used in statistical methods and imputation techniques because it simplifies data modeling.  
+Conditional Distribution-based Imputation of Missing Values with Regularization (DIMV): An algorithm for imputing missing data with low RMSE, scalability, and explainability. Ideal for critical domains like medicine and finance, DIMV offers reliable analysis, approximated confidence regions, and robustness to assumptions, making it a versatile choice for data imputation. DIMV is under the assumption that it relies on the normally distributed assumption as part of its theoretical foundation. The assumption of normality is often used in statistical methods and imputation techniques because it simplifies data modeling.  
 
 
 #  Installation: 
