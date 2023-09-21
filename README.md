@@ -3,7 +3,7 @@
 This is an imputation package for missing data, which can be easily install with pip. The code repository associated with the paper: "Conditional expectation with regularization for missing data imputation." This paper is under evaluation for the journal. 
 
 # Introduction:
-Conditional Distribution-based Imputation of Missing Values with Regularization (DIMV): An algorithm for imputing missing data with low RMSE, scalability, and explainability. Ideal for critical domains like medicine and finance, DIMV offers reliable analysis, approximated confidence regions, and robustness to assumptions, making it a versatile choice for data imputation. DIMV is under the assumption that it relies on the normally distributed assumption as part of its theoretical foundation. The assumption of normality is often used in statistical methods and imputation techniques because it simplifies data modeling.  
+Conditional Distribution-based Imputation of Missing Values with Regularization (![DIMV](https://arxiv.org/abs/2302.00911)): An algorithm for imputing missing data with low RMSE, scalability, and explainability. Ideal for critical domains like medicine and finance, DIMV offers reliable analysis, approximated confidence regions, and robustness to assumptions, making it a versatile choice for data imputation. DIMV is under the assumption that it relies on the normally distributed assumption as part of its theoretical foundation. The assumption of normality is often used in statistical methods and imputation techniques because it simplifies data modeling.  
 
 
 #  Installation: 
@@ -31,7 +31,7 @@ pip install -r requirements.txt
 ## If you install with option 1 (with pip):
 For example you have missing data array named X and you want to impute following the DIMV imputation 
 
-```
+```python 
 from DIMVImputation import DIMVImputation
 
 imputer = DIMVImputation()
@@ -49,7 +49,7 @@ X_imputed = imputer.transform(X)  # transform on X_test if splitting is neccessa
 The ```.fit()``` function applied on train set to compute the covariance matrix. The convariance matrix is computed from the train set. 
 
 Create a sample dataset as a numpy array ```missing_data``` 
-```
+```python 
 #Create train test split
 test_size = .2
 split_index = int(len(missing_data) * (1 - test_size))
@@ -61,7 +61,7 @@ X_test_miss = missing_data[split_index:, :]
 ```  
 
 Fit the model on the train set: 
-``` 
+```python 
 from DIMVImputation.DIMVImputation import DIMVImputation 
 imputer = DIMVImputation()
 imputer.fit(X_train_miss, initializing=False) 
