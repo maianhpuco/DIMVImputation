@@ -1,5 +1,5 @@
 
-#Conditional expectation with regularization for missing data imputation (DIMV) 
+# Conditional expectation with regularization for missing data imputation (DIMV) 
 
 This is an **imputation package for missing data**, which can be easily install with pip. 
 
