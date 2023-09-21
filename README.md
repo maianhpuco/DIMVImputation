@@ -69,7 +69,7 @@ imputer.fit(X_train_miss, initializing=False)
 
 Then use ```.cross_validate()``` to grid search for optimal value for reguralization value $\alpha$ and finally tranform the missing data ```X_test_miss``` 
 
-```
+```python 
 imputer.cross_validate(train_percent=1, alphas = [0.0, 0.01, 0.1, 1.0, 10.0, 100.0] ) 
 # default value for alpha = [0.0, 0.01, 0.1, 1.0, 10.0, 100.0] 
 
