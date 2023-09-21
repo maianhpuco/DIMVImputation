@@ -90,8 +90,6 @@ In this comparison, we evaluate DIMV's performance on both small datasets with r
 
 For small datasets with random missing data: 
 
-For small datasets with random missing data:
-
 ![image](https://github.com/maianhpuco/DIMVImputation/assets/34562568/8eec91bf-37af-4344-be15-d57c4e58bb64)
 
 
