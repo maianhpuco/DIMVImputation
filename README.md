@@ -1,7 +1,6 @@
 
 # DIMV: Conditional expectation with regularization for missing data imputation (DIMV) 
-
-The code repository associated with the paper: "Conditional expectation with regularization for missing data imputation." This paper is under evaluation for the journal. 
+This is an imputation package for missing data, which can be easily install with pip. The code repository associated with the paper: "Conditional expectation with regularization for missing data imputation." This paper is under evaluation for the journal. 
 
 # Introduction:
 Conditional Distribution-based Imputation of Missing Values with Regularization (DIMV): An algorithm for imputing missing data with low RMSE, scalability, and explainability. Ideal for critical domains like medicine and finance, DIMV offers reliable analysis, approximated confidence regions, and robustness to assumptions, making it a versatile choice for data imputation. DIMV is under the assumption that it relies on the normally distributed assumption as part of its theoretical foundation. The assumption of normality is often used in statistical methods and imputation techniques because it simplifies data modeling.  
@@ -80,6 +79,13 @@ X_test_imp = imputer.transform(X_test_miss)
 
 # Comparision: 
 
+
+Here's an illustration of DIMV's imputation for MNIST and FashionMNIST:
+ 
+![image](https://github.com/maianhpuco/DIMVImputation/assets/34562568/9fe8efb4-4085-41fa-993f-c61335c33751)
+
+![image](https://github.com/maianhpuco/DIMVImputation/assets/34562568/6e8f9732-6bcf-4a84-aceb-bd2218ab4f7e)
+
 In this comparison, we evaluate DIMV's performance on both small datasets with randomly missing data patterns and medium datasets (MNIST and FashionMNIST) with monotone missing data patterns (cutting a piece of the image on the top right).
 
 For small datasets with random missing data: 
@@ -90,16 +96,11 @@ For small datasets with random missing data:
 
 
 For medium datasets (MNIST and FashionMNIST):
- ![image](https://github.com/maianhpuco/DIMVImputation/assets/34562568/7a08d514-9805-4f83-88b0-7e413294c53a)
+ ![image](https://github.com/maianhpuco/DIMVImputation/assets/34562568/7a08d514-9805-4f83-88b0-7e413294c53a) 
 
-Here's an illustration of DIMV's imputation for MNIST and FashionMNIST:
  
-![image](https://github.com/maianhpuco/DIMVImputation/assets/34562568/9fe8efb4-4085-41fa-993f-c61335c33751)
-
-![image](https://github.com/maianhpuco/DIMVImputation/assets/34562568/6e8f9732-6bcf-4a84-aceb-bd2218ab4f7e)
-
 DIMV has demonstrated strong performance in terms of computational efficiency and robustness, spanning from small to medium datasets and accommodating various types of missing data patterns. 
-
+Indeed, some popular imputation methods, like k-nearest Neighbors Imputation (KNNI), can encounter performance issues regarding computational time, especially when dealing with large datasets or high-dimensional data. 
  
 # Contents:
 The codes are structured as follows:  
