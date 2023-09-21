@@ -1,7 +1,7 @@
 
 # Conditional expectation with regularization for missing data imputation (DIMV) 
 
-This is an **imputation package for missing data**, which can be easily install with pip. 
+This is an **imputation package for missing data**, which can be easily installed with pip. 
 
 The code repository associated with the paper: "Conditional expectation with regularization for missing data imputation." This paper is under evaluation for the journal you can find it at https://arxiv.org/abs/2302.00911 
 
