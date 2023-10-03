@@ -40,7 +40,7 @@ from DIMVImputation import DIMVImputation
 imputer = DIMVImputation()
 imputer.fit(X, initializing=initializing) # fit on X_train if splitting is neccessary 
 
-if cross_validation: # regularization 
+# if cross_validation then use this finding regularization parameter 
 imputer.cross_validate()
 
 X_imputed = imputer.transform(X)  # transform on X_test if splitting is neccessary
