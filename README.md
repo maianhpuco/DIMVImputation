@@ -38,11 +38,10 @@ For example you have missing data array named X and you want to impute following
 from DIMVImputation import DIMVImputation
 
 imputer = DIMVImputation()
-imputer.fit(X, initializing=self.initializing) # fit on X_train if splitting is neccessary 
+imputer.fit(X, initializing=initializing) # fit on X_train if splitting is neccessary 
 
-if self.cross_validation: # regularization 
+if cross_validation: # regularization 
 imputer.cross_validate()
-
 
 X_imputed = imputer.transform(X)  # transform on X_test if splitting is neccessary
 ``` 
