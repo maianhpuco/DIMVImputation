@@ -201,6 +201,7 @@ class DIMVImputation:
         Returns:
             np.ndarray: Imputed array of shape (n_samples, n_features)
         """
+
         if cross_validation:
             self.cross_validate()
 
