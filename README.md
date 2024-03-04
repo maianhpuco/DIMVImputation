@@ -99,12 +99,11 @@ In this comparison, we evaluate DIMV's performance on both small datasets with r
 
 For small datasets with random missing data: 
 
-![image](https://github.com/maianhpuco/DIMVImputation/assets/34562568/8eec91bf-37af-4344-be15-d57c4e58bb64)
-
+<img src="https://github.com/maianhpuco/DIMVImputation/assets/34562568/8eec91bf-37af-4344-be15-d57c4e58bb64" alt="image4" width="600">  
 
 For medium datasets (MNIST and FashionMNIST):
- ![image](https://github.com/maianhpuco/DIMVImputation/assets/34562568/7a08d514-9805-4f83-88b0-7e413294c53a) 
 
+<img src="https://github.com/maianhpuco/DIMVImputation/assets/34562568/7a08d514-9805-4f83-88b0-7e413294c53a" alt="image5" width="600"> 
  
 DIMV has demonstrated strong performance in terms of computational efficiency and robustness, spanning from small to medium datasets and accommodating various types of missing data patterns. 
 Indeed, some popular imputation methods, like k-nearest Neighbors Imputation (KNNI), can encounter performance issues regarding computational time, especially when dealing with large datasets or high-dimensional data. 
