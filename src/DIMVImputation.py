@@ -131,6 +131,8 @@ class DIMVImputation:
         self.best_alpha = best_alpha
         self.cv_score = scores
         results = {"best_alpha": best_alpha, "cv_scores": scores}
+        print("Validation result: best alpha {}, best score {}, scores {}".
+              format(best_alpha, best_score, scores))
         #turn off the cross-validation mode: cv_mode
         self.cv_mode = False
         return best_alpha
