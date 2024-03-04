@@ -1,6 +1,7 @@
-import numpy as np
 import math
 from typing import *
+
+import numpy as np
 
 
 def normalize(
@@ -126,7 +127,8 @@ def create_randomly_missing(data: np.ndarray, perc_del: float) -> np.ndarray:
     # Flatten data into 1 row
     flatten_data = data.reshape(1, -1)
     # Uniform missing mask
-    missing_mask = np.random.uniform(0, 1, flatten_data.shape[1]).reshape(1, -1)
+    missing_mask = np.random.uniform(0, 1,
+                                     flatten_data.shape[1]).reshape(1, -1)
     # Mark as missing if value in mask  < perc_del
     missing_data = flatten_data.copy().astype('float')
     missing_data[missing_mask <= perc_del] = np.nan

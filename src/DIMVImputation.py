@@ -202,12 +202,8 @@ class DIMVImputation:
             np.ndarray: Imputed array of shape (n_samples, n_features)
         """
         if cross_validation:
-            if not self.cv_mode:
-                self.cross_validate()
-            else:
-                print(
-                    "Cross Validation already implemented, if you want to re-run cross validation, use .cross_validate()"
-                )
+            self.cross_validate()
+
         return self._transform(X_input,
                                alpha=alpha,
                                features_corr_threshold=features_corr_threshold,
