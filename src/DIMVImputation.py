@@ -201,7 +201,6 @@ class DIMVImputation:
         """
         if cross_validation:
             self.cross_validate()
-
         self._transform(X_input, 
                         alpha=alpha, 
                         features_corr_threshold=features_corr_threshold, 
@@ -211,7 +210,7 @@ class DIMVImputation:
                   X_input: np.ndarray,
                   alpha: np.ndarray = 0,
                   features_corr_threshold=None,
-                  mlargest_features=None)
+                   mlargest_features=None):
 
         
                 X_input = X_input.astype(np.float64)
