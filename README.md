@@ -92,7 +92,7 @@ X_test_imp = imputer.transform(X_test_miss, cross_validation=False)
 Here's an illustration of DIMV's imputation for MNIST and FashionMNIST:
 
 <img src="https://github.com/maianhpuco/DIMVImputation/assets/34562568/394f60cf-d886-4071-9873-1ebc56aa12f7" alt="image1" width="400"> 
-<img src="https://github.com/maianhpuco/DIMVImputation/assets/34562568/6e8f9732-6bcf-4a84-aceb-bd2218ab4f7e" alt="image2" width="400">
+<img src="https://github.com/maianhpuco/DIMVImputation/assets/34562568/442c630a-804c-48d7-89f3-39ca1e09be9e" alt="image2" width="400">
 
  
 In this comparison, we evaluate DIMV's performance on both small datasets with randomly missing data patterns and medium datasets (MNIST and FashionMNIST) with monotone missing data patterns (cutting a piece of the image on the top right).
