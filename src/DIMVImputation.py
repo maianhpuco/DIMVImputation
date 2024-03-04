@@ -209,6 +209,7 @@ class DIMVImputation:
             alpha = self.best_alpha
 
         print("Value alpha used in for transforming is: {}".format(alpha))
+
         return self._transform(X_input,
                                alpha=alpha,
                                features_corr_threshold=features_corr_threshold,
