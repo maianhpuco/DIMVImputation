@@ -283,11 +283,11 @@ class DIMVImputation:
                 s_missing_fts[idx] = False
                 s_avai_fts[idx] = False
 
-                pred = self.estimator._transform(feature_idxes=s_avai_fts,
-                                                 label_idx=idx,
-                                                 rows=same_missing_pattern,
-                                                 missing_data=missing_data,
-                                                 alpha=alpha)
+                pred = self.estimator.transform(feature_idxes=s_avai_fts,
+                                                label_idx=idx,
+                                                rows=same_missing_pattern,
+                                                missing_data=missing_data,
+                                                alpha=alpha)
 
                 X_imp_normed[same_missing_pattern, idx] = pred
 
