@@ -201,10 +201,10 @@ class DIMVImputation:
         """
         if cross_validation:
             self.cross_validate()
-        self._transform(X_input,
-                        alpha=alpha,
-                        features_corr_threshold=features_corr_threshold,
-                        mlargest_features=mlargest_features)
+        return self._transform(X_input,
+                               alpha=alpha,
+                               features_corr_threshold=features_corr_threshold,
+                               mlargest_features=mlargest_features)
 
     def _transform(self,
                    X_input: np.ndarray,
