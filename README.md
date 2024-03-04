@@ -37,18 +37,23 @@ For example you have missing data array named X and you want to impute following
 ```python 
 from DIMVImputation import DIMVImputation
 
+# Create an instance of the DIMVImputation class
 imputer = DIMVImputation()
-imputer.fit(X, initializing=True) # fit on X_train if splitting is neccessary 
 
-# if cross_validation then use this finding regularization parameter 
-imputer.cross_validate()
+# Fit the imputer to the data X (possibly X_train if splitting is necessary), without initializing it
+imputer.fit(X, initializing=False)
 
-X_imputed = imputer.transform(X)  # transform on X_test if splitting is neccessary
+# Apply imputation to the data X (possibly X_test if splitting is necessary)
+# By default, the algorithm implements cross-validation to find the best value for the regularization parameter (alpha)
+# Default regularization parameter values: alphas = [0.0, 0.01, 0.1, 1.0, 10.0, 100.0]
+# Default percentage of data used for training in cross-validation: train_percent=100
+X_imputed = imputer.transform(X)
+
 ``` 
 
 
 ## If you install with option 2(clone the repo) 
-The ```.fit()``` function applied on train set to compute the covariance matrix. The convariance matrix is computed from the train set. 
+The ```.fit()``` function applied on train set to compute the covariance matrix. The covariance matrix is calculated from the train set. 
 
 Create a sample dataset as a numpy array ```missing_data``` 
 ```python 
@@ -66,16 +71,18 @@ Fit the model on the train set:
 ```python 
 from DIMVImputation.DIMVImputation import DIMVImputation 
 imputer = DIMVImputation()
-imputer.fit(X_train_miss, initializing=False) 
+imputer.fit(X_train_miss, initializing=False)
+
 ```
 
 Then use ```.cross_validate()``` to grid search for optimal value for reguralization value $\alpha$ and finally tranform the missing data ```X_test_miss``` 
 
-```python 
-imputer.cross_validate(train_percent=1, alphas = [0.0, 0.01, 0.1, 1.0, 10.0, 100.0] ) 
-# default value for alpha = [0.0, 0.01, 0.1, 1.0, 10.0, 100.0] 
+```python
 
-X_test_imp = imputer.transform(X_test_miss) 
+# To input your alpha grid and data percentage for cross-validation, use the following two lines of code
+imputer.cross_validate(train_percent=80, alphas=[0.0, 0.01, 0.1, 1.0])
+X_test_imp = imputer.transform(X_test_miss, cross_validation=False)
+
 ```
 
 
