@@ -106,7 +106,7 @@ class DIMVImputation:
             print("Running Cross Validation, alpha={}".format(alpha))
 
             try:
-                X_cv_imputed = self.transform(
+                X_cv_imputed = self._transform(
                     X_cv,
                     alpha=alpha,
                     features_corr_threshold=features_corr_threshold,
@@ -180,12 +180,12 @@ class DIMVImputation:
 
         return new_s_avai_fts
 
-    def transform(self,
+    def transform(self, 
                   X_input: np.ndarray,
                   alpha: np.ndarray = 0,
                   cross_validation: bool = True,
                   features_corr_threshold=None,
-                  mlargest_features=None) -> np.ndarray:
+                  mlargest_features=None) -> np.ndarray: 
         """
         Imputes the estimated value for missing position in the input array X_input using the covariance matrix calculated in the fit step 
         Args:
@@ -201,7 +201,20 @@ class DIMVImputation:
         """
         if cross_validation:
             self.cross_validate()
-        X_input = X_input.astype(np.float64)
+
+        self._transform(X_input, 
+                        alpha=alpha, 
+                        features_corr_threshold=features_corr_threshold, 
+                        mlargest_features=mlargest_features)
+     
+    def _transform(self,
+                  X_input: np.ndarray,
+                  alpha: np.ndarray = 0,
+                  features_corr_threshold=None,
+                  mlargest_features=None)
+
+        
+                X_input = X_input.astype(np.float64)
 
         if mlargest_features is not None:
             assert mlargest_features <= self.cov_no_zeros.shape[0], \
@@ -272,7 +285,7 @@ class DIMVImputation:
                 s_missing_fts[idx] = False
                 s_avai_fts[idx] = False
 
-                pred = self.estimator.transform(feature_idxes=s_avai_fts,
+                pred = self.estimator._transform(feature_idxes=s_avai_fts,
                                                 label_idx=idx,
                                                 rows=same_missing_pattern,
                                                 missing_data=missing_data,
