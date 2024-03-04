@@ -90,10 +90,13 @@ X_test_imp = imputer.transform(X_test_miss, cross_validation=False)
 
 
 Here's an illustration of DIMV's imputation for MNIST and FashionMNIST:
+![image](https://github.com/maianhpuco/DIMVImputation/assets/34562568/394f60cf-d886-4071-9873-1ebc56aa12f7)
+
  
 <img src="https://github.com/maianhpuco/DIMVImputation/assets/34562568/9fe8efb4-4085-41fa-993f-c61335c33751" alt="image1" width="400">
 
 
+<img src="https://github.com/maianhpuco/DIMVImputation/assets/34562568/394f60cf-d886-4071-9873-1ebc56aa12f7" alt="image1" width="400"> 
 <img src="https://github.com/maianhpuco/DIMVImputation/assets/34562568/6e8f9732-6bcf-4a84-aceb-bd2218ab4f7e" alt="image2" width="400">
 
  
