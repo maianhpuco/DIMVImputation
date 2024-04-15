@@ -30,15 +30,18 @@ class DIMVImputation:
             X: np.ndarray,
             initializing: bool = False,
             n_jobs=None) -> None:
-        """
-        Imputation class that use conditional expectation to fill the missing data position
-        The covariance matrix would be computed by the DPER algorithm 
-        When to use initializing : Initialize = True should be set if there is many missing pattern in the dataset for example randomly missing
-        Args:
-            X (np.ndarray): Xtrain, dataset used to computer the covariance matrix 
-            initializing (bool, optional): Defaults to False; when  initializing is set as True, the missing position would be all initialize by 0 (also the mean of the scaled)
-            n_jobs : umber of parallel jobs to run the covariance computation 
-        """
+        """ 
+        Fit the imputer on the training set to compute the covariance matrix.
+
+        Parameters
+        ----------
+        X : np.ndarray
+            Training dataset used to compute the covariance matrix.
+        initializing : bool, optional
+            If True, initialize missing positions to zero, by default False.
+        n_jobs : int, optional
+            Number of parallel jobs for covariance computation, by default None.
+        """ 
         self.initializing = initializing
         self.Xtrain = X
         self.X_train_norm, self.train_mean, self.train_std = normalize(X, X)
@@ -65,14 +68,21 @@ class DIMVImputation:
         """
         Perform cross-validation on the model.
 
-        Args:
-            alphas (List[float], optional): Alpha values to use for cross-validation. Defaults is [0.0, 0.01, 0.1, 1.0, 10.0, 100.0].
-            train_percent (float, optional): Percentage of the training data to use for cross-validation. Defaults to 100. (100%)
-            features_corr_threshold (float, optional): Correlation threshold to use when selecting features. Defaults to 1.
-            mlargest_features (int, optional): Number of top features to use when selecting features. Defaults to 1.
+        Parameters
+        ----------
+        alphas : List[float], optional
+            Alpha values to use for cross-validation, by default [0.0, 0.01, 0.1, 1.0, 10.0, 100.0].
+        train_percent: float, optional
+            The percentage of the training data used for cross-validation is 100.0 by default.
+        features_corr_threshold: float, optional
+            Correlation threshold for feature selection, by default 0.
+        mlargest_features: int, optional
+            Number of top features to select, by default 1.
 
-        Returns:
-            Dict[str, Union[float, List[float]]]: {"best_alpha" :best_alpha, "cv_scores": scores}  Results of cross-validation.
+        Returns
+        -------
+        Dict[str, Union[float, List[float]]]
+            Cross-validation results, including best alpha and scores.
         """
         #set cv_mode = True
         self.cv_mode = True
@@ -146,20 +156,26 @@ class DIMVImputation:
         mlargest: int = None,
     ):
         """
-        Choosing a set of feature that correlation with the target feature f (imputed features) with criteria:
-            1. Have correlation equal to or greater than a threshold features_corr_threshold
-            2. If no feature meet the condition, choose top m features that have highest correlation with feature f
-        
-        Args:
-            s_missing_fts (numpy.array): a boolean array indicating which features are missing for the current instance
-            s_avai_fts (numpy.array): a boolean array indicating which features are available for the current instance
-            idx (int): the index of the target feature to be imputed 
-            th (float, optional): the threshold for selecting features with correlation to the target feature. Default value is 0. (mean all the feature in `s_avai_fts`)
-            mlargest (int, optional): the maximum number of features to select if no feature meets the correlation threshold. Default value is None, which indicates that all available features should be considered.
-        
-        Returns:
-            new_s_avai_fts (numpy.array): a boolean array indicating which features have been selected for imputation, based on the specified criteria. 
-        """
+        Select features based on correlation with target feature for imputation.
+
+        Parameters
+        ----------
+        s_missing_fts : np.array
+            Boolean array indicating missing features.
+        s_avai_fts : np.array
+            Boolean array indicating available features.
+        idx : int
+            Index of the target feature.
+        th : float, optional
+            Correlation threshold, by default 0.
+        mlargest : int, optional
+            Maximum number of features to select, by default None.
+
+        Returns
+        -------
+        np.array
+            Boolean array indicating selected features.
+        """     
 
         mlargest = mlargest + 1
         S = self.cov_no_zeros
@@ -189,18 +205,26 @@ class DIMVImputation:
                   features_corr_threshold=None,
                   mlargest_features=None) -> np.ndarray:
         """
-        Imputes the estimated value for missing position in the input array X_input using the covariance matrix calculated in the fit step 
-        Args:
-            X_input (np.ndarray): Input array of shape (n_samples, n_features) containing missing values
-            cross_validation (bool): If true, cross validation will be applied to find alpha for relaguralization before imputation. 
-                Default cross validation would be implemented with 100% dataset, except exclusively specified in the self.cross_validation prior to imputation. 
+        Impute missing values in the input array using the computed covariance matrix.
 
-            alpha (np.ndarray, optional): Array of shape (n_features,) containing the regularization parameter for each feature
-            mlargest_features (int, optional): The maximum number of top features to select based on correlation with target feature. Default is None
+        Parameters
+        ----------
+        X_input : np.ndarray
+            Input array with missing values.
+        alpha : np.ndarray, optional
+            Regularization parameter for each feature, by default 0.
+        cross_validation : bool, optional
+            Perform cross-validation to find optimal alpha, by default True.
+        features_corr_threshold : float, optional
+            Correlation threshold for feature selection, by default None.
+        mlargest_features : int, optional
+            Maximum number of top features for selection, by default None.
 
-        Returns:
-            np.ndarray: Imputed array of shape (n_samples, n_features)
-        """
+        Returns
+        -------
+        np.ndarray
+            Imputed array with missing values filled.
+        """ 
 
         if cross_validation:
             self.cross_validate()
