@@ -126,7 +126,6 @@ X_test_imputed = imputer.transform(X_test_miss)
 By **default**, `DIMVImputation` uses cross-validation to determine the optimal value for the regularization parameter (alpha). The default regularization parameter values include alphas of 0.0, 0.01, 0.1, 1.0, 10.0, and 100.0. Moreover, the default percentage of data utilized for training in cross-validation is set to 100%. 
 
 - To specify a custom range of alpha values for cross-validation, use .cross_validate() to conduct a grid search for the best alpha value. Once determined, this transformation is applied to the missing data (X_test_miss). For instance:
-- 
 ```python
 # Define your alpha grid and specify the data percentage for cross-validation
 imputer.cross_validate(alphas=[0.0, 0.01, 0.1, 1.0]) 
