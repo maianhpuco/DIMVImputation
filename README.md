@@ -8,6 +8,56 @@ The code repository associated with the paper: "Conditional expectation with reg
 # Introduction:
 Conditional Distribution-based Imputation of Missing Values with Regularization (DIMV): An algorithm for imputing missing data with low RMSE, scalability, and explainability. Ideal for critical domains like medicine and finance, DIMV offers reliable analysis, approximated confidence regions, and robustness to assumptions, making it a versatile choice for data imputation. DIMV is under the assumption that it relies on the normally distributed assumption as part of its theoretical foundation. The assumption of normality is often used in statistical methods and imputation techniques because it simplifies data modeling.  
 
+# Comparision 
+
+In this comparison, we evaluate DIMV's performance on both small datasets with randomly missing data patterns and medium datasets (MNIST and FashionMNIST) with monotone missing data patterns (cutting a piece of the image on the top right). 
+ 
+## Randomly Missing Pattern
+For small datasets with random missing data: 
+<img src="https://github.com/maianhpuco/DIMVImputation/assets/34562568/8eec91bf-37af-4344-be15-d57c4e58bb64" alt="image4" width="300">   
+
+
+Here's an illustration of DIMV's imputation for MNIST and FashionMNIST:
+
+<img src="https://github.com/maianhpuco/DIMVImputation/assets/34562568/394f60cf-d886-4071-9873-1ebc56aa12f7" alt="image1" width="200"> 
+<img src="https://github.com/maianhpuco/DIMVImputation/assets/34562568/442c630a-804c-48d7-89f3-39ca1e09be9e" alt="image2" width="200">
+
+ 
+
+## Monotonic missing pattern 
+For medium datasets (MNIST and FashionMNIST):
+
+<img src="https://github.com/maianhpuco/DIMVImputation/assets/34562568/7a08d514-9805-4f83-88b0-7e413294c53a" alt="image5" width="300"> 
+
+DIMV has shown promising performance in terms of computational efficiency and robustness across small to medium datasets, accommodating a variety of missing data patterns. However, like many imputation methods, DIMV may face challenges with computational time when dealing with large datasets or high-dimensional data. For instance, popular imputation methods like k-nearest Neighbors Imputation (KNNI) can sometimes encounter performance issues in these scenarios. 
+
+  
+# Contents:
+The codes are structured as follows:  
+
+``` 
+.
+├── README.md
+├── example.ipynb
+├── requirements.txt
+└── src
+    ├── DIMVImputation.py
+    ├── __init__.py
+    ├── conditional_expectation.py
+    ├── dpers.py
+    └── utils.py 
+ ``` 
+ 
+ 
+
+In ```/src``` folders:
+
+- ```DIMVImputation.py``` implements the DIMV imputation algorithm for imputing missing data. 
+- ``` dpers.py``` that implements the DPER algorithm for computing the covariance matrix used in the DIMV (Conditional expectation with regularization for missing data imputation) algorithm. (input is a normalized input matrix). 
+- ```conditional_expectation.py``` contains the computation for the regularized conditional expectation for a sliced position in the dataset, given the covariance matrix. 
+    
+```example.ipynb``` is a Jupyter Notebook file that contains examples demonstrating how to use the functionalities and methods.  
+
 
 #  Installation: 
 ### Option 1: Install with pip 
@@ -86,52 +136,7 @@ X_test_imp = imputer.transform(X_test_miss, cross_validation=False)
 ```
 
 
-# Comparision: 
 
 
-Here's an illustration of DIMV's imputation for MNIST and FashionMNIST:
-
-<img src="https://github.com/maianhpuco/DIMVImputation/assets/34562568/394f60cf-d886-4071-9873-1ebc56aa12f7" alt="image1" width="400"> 
-<img src="https://github.com/maianhpuco/DIMVImputation/assets/34562568/442c630a-804c-48d7-89f3-39ca1e09be9e" alt="image2" width="400">
-
- 
-In this comparison, we evaluate DIMV's performance on both small datasets with randomly missing data patterns and medium datasets (MNIST and FashionMNIST) with monotone missing data patterns (cutting a piece of the image on the top right).
-
-For small datasets with random missing data: 
-
-<img src="https://github.com/maianhpuco/DIMVImputation/assets/34562568/8eec91bf-37af-4344-be15-d57c4e58bb64" alt="image4" width="600">  
-
-For medium datasets (MNIST and FashionMNIST):
-
-<img src="https://github.com/maianhpuco/DIMVImputation/assets/34562568/7a08d514-9805-4f83-88b0-7e413294c53a" alt="image5" width="600"> 
- 
-DIMV has demonstrated strong performance in terms of computational efficiency and robustness, spanning from small to medium datasets and accommodating various types of missing data patterns. 
-Indeed, some popular imputation methods, like k-nearest Neighbors Imputation (KNNI), can encounter performance issues regarding computational time, especially when dealing with large datasets or high-dimensional data. 
- 
-# Contents:
-The codes are structured as follows:  
-
-``` 
-.
-├── README.md
-├── example.ipynb
-├── requirements.txt
-└── src
-    ├── DIMVImputation.py
-    ├── __init__.py
-    ├── conditional_expectation.py
-    ├── dpers.py
-    └── utils.py 
- ``` 
- 
- 
-
-In ```/src``` folders:
-
-- ```DIMVImputation.py``` implements the DIMV imputation algorithm for imputing missing data. 
-- ``` dpers.py``` that implements the DPER algorithm for computing the covariance matrix used in the DIMV (Conditional expectation with regularization for missing data imputation) algorithm. (input is a normalized input matrix). 
-- ```conditional_expectation.py``` contains the computation for the regularized conditional expectation for a sliced position in the dataset, given the covariance matrix. 
-    
-```example.ipynb``` is a Jupyter Notebook file that contains examples demonstrating how to use the functionalities and methods. 
 
  
