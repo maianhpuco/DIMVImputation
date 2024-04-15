@@ -225,19 +225,23 @@ class DIMVImputation:
         np.ndarray
             Imputed array with missing values filled.
         """ 
-
-        if cross_validation:
-            self.cross_validate()
-
-        if self.best_alpha is not None:
-            alpha = self.best_alpha
-
-        print("Value alpha used in for transforming is: {}".format(alpha))
-
-        return self._transform(X_input,
-                               alpha=alpha,
-                               features_corr_threshold=features_corr_threshold,
-                               mlargest_features=mlargest_features)
+                      
+        if np.isnan(X_input).any():
+            if cross_validation:
+                self.cross_validate()
+    
+            if self.best_alpha is not None:
+                alpha = self.best_alpha
+    
+            print("Value alpha used in for transforming is: {}".format(alpha))
+    
+            return self._transform(X_input,
+                                   alpha=alpha,
+                                   features_corr_threshold=features_corr_threshold,
+                                   mlargest_features=mlargest_features)
+        else:
+            print("No missing values found in the input array. Returning the input array.")
+            return X_input
 
     def _transform(self,
                    X_input: np.ndarray,
