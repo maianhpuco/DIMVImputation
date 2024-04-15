@@ -14,7 +14,7 @@ In this comparison, we evaluate DIMV's performance on both small datasets with r
  
 ###  Randomly Missing Pattern
 For small datasets with random missing data: 
-<img src="https://github.com/maianhpuco/DIMVImputation/assets/34562568/8eec91bf-37af-4344-be15-d57c4e58bb64" alt="image4" width="500">    
+<img src="https://github.com/maianhpuco/DIMVImputation/assets/34562568/8eec91bf-37af-4344-be15-d57c4e58bb64" alt="image4" width="600">    
 
 ###  Monotonic missing pattern 
 For medium datasets (MNIST and FashionMNIST):
@@ -23,8 +23,8 @@ For medium datasets (MNIST and FashionMNIST):
 
 Here's an illustration of DIMV's imputation for MNIST and FashionMNIST:
 
-<img src="https://github.com/maianhpuco/DIMVImputation/assets/34562568/394f60cf-d886-4071-9873-1ebc56aa12f7" alt="image1" width="200"> 
-<img src="https://github.com/maianhpuco/DIMVImputation/assets/34562568/442c630a-804c-48d7-89f3-39ca1e09be9e" alt="image2" width="200"> 
+<img src="https://github.com/maianhpuco/DIMVImputation/assets/34562568/394f60cf-d886-4071-9873-1ebc56aa12f7" alt="image1" width="300"> 
+<img src="https://github.com/maianhpuco/DIMVImputation/assets/34562568/442c630a-804c-48d7-89f3-39ca1e09be9e" alt="image2" width="300"> 
 
 DIMV has shown promising performance in terms of computational efficiency and robustness across small to medium datasets, accommodating a variety of missing data patterns. However, like many imputation methods, DIMV may face challenges with computational time when dealing with large datasets or high-dimensional data. For instance, popular imputation methods like k-nearest Neighbors Imputation (KNNI) can sometimes encounter performance issues in these scenarios. 
 
@@ -63,7 +63,7 @@ Install the package with:
 !pip install git+https://github.com/maianhpuco/DIMVImputation.git 
 ```
 
-### Option 2: Install from source: 
+### Option 2: Install from source 
 
 - Step 1: Clone the repository 
 
@@ -76,7 +76,7 @@ Then, create a virtual environment and activate the environment.
 pip install -r requirements.txt 
 ```
 
-# 4. Usages: 
+# 4. Usages
 
 For example, let's create a sample dataset named missing_data using a numpy array.
 ```python 
@@ -90,7 +90,7 @@ X_train_miss = missing_data[:split_index, :]
 X_test_miss = missing_data[split_index:, :]  
 ```
 
-## If you install with with pip:
+## If you install with with pip
 ```python 
 from DIMVImputation import DIMVImputation
 
