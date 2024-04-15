@@ -125,21 +125,32 @@ X_test_imputed = imputer.transform(X_test_miss)
 
 By **default**, `DIMVImputation` uses cross-validation to determine the optimal value for the regularization parameter (alpha). The default regularization parameter values include alphas of 0.0, 0.01, 0.1, 1.0, 10.0, and 100.0. Moreover, the default percentage of data utilized for training in cross-validation is set to 100%. 
 
-- If you wish to specify the range of alphas for cross-validation, use `.cross_validate()` to perform a grid search for the optimal regularization parameter value, $\alpha$. Finally, the transformation is applied to the missing data. ```X_test_miss```. For example 
+- To specify a custom range of alpha values for cross-validation, use .cross_validate() to conduct a grid search for the best alpha value. Once determined, this transformation is applied to the missing data (X_test_miss). For instance:
+- 
 ```python
-# To input your alpha grid and data percentage for cross-validation, use the following two lines of code
+# Define your alpha grid and specify the data percentage for cross-validation
 imputer.cross_validate(alphas=[0.0, 0.01, 0.1, 1.0]) 
 X_test_imp = imputer.transform(X_test_miss, cross_validation=False)
 ```
 
-- If you wish to adjust the percentage of training data used during cross-validation (this only affects cross-validation, not the `.fit()` function), `fit` will still use the training set you provided. You can then go ahead and apply the transformation as shown below. 
+
+- If you aim to modify the percentage of training data utilized in cross-validation (note: this doesn't affect the .fit() method's training set), you can adjust it as follows: 
 ```python
-# To input your alpha grid and data percentage for cross-validation, use the following two lines of code
+# Define your alpha grid and set the data percentage for cross-validation
 imputer.cross_validate(train_percent=80, alphas=[0.0, 0.01, 0.1, 1.0]) 
 X_test_imp = imputer.transform(X_test_miss, cross_validation=False)
 ```
- 
 
+ - To incorporate FeatureSelection by eliminating irrelevant features based on a threshold, apply the following settings. This feature selection criterion will be applied to both cross-validation and the `.fit()` method: 
+```python 
+imputer.cross_validate(
+    train_percent=80,
+    alphas=[0.0, 0.01, 0.1, 1.0],
+    features_corr_threshold=0.3,
+    mlargest_features=5 
+) 
+X_test_imp = imputer.transform(X_test_miss, cross_validation=False) 
+``` 
 
 
 
