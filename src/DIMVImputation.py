@@ -147,7 +147,7 @@ class DIMVImputation:
         self.cv_mode = False
         return best_alpha
 
-    def filter_features(
+    def _filter_features(
         self,
         s_missing_fts: np.array,
         s_avai_fts: np.array,
@@ -297,7 +297,7 @@ class DIMVImputation:
                 s_avai_fts = ~np.isnan(X[s, :])
                 # import pdb; pdb.set_trace()
                 if features_corr_threshold is not None:
-                    s_avai_fts = self.filter_features(
+                    s_avai_fts = self._filter_features(
                         s_missing_fts,
                         s_avai_fts,
                         idx,
