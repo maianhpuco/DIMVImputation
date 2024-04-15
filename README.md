@@ -78,31 +78,7 @@ pip install -r requirements.txt
 
 # Usages: 
 
-## If you install with option 1 (with pip):
-For example, suppose you have a dataset with missing values named X, and you wish to apply the DIMV imputation method to fill in these missing values. 
-
-```python 
-from DIMVImputation import DIMVImputation
-
-# Create an instance of the DIMVImputation class
-imputer = DIMVImputation()
-
-# Fit the imputer to the data X (possibly X_train if splitting is necessary), without initializing it
-imputer.fit(X, initializing=False)
-
-# Apply imputation to the data X (possibly X_test if splitting is necessary)
-# By default, the algorithm implements cross-validation to find the best value for the regularization parameter (alpha)
-# Default regularization parameter values: alphas = [0.0, 0.01, 0.1, 1.0, 10.0, 100.0]
-# Default percentage of data used for training in cross-validation: train_percent=100
-X_imputed = imputer.transform(X)
-
-``` 
-
-
-## If you install with option 2(clone the repo) 
-The `.fit()` function is applied to the training set to compute the covariance matrix, which is then calculated based on the training set. 
-
-Create a sample dataset as a numpy array ```missing_data``` 
+For example, let's create a sample dataset named missing_data using a numpy array.
 ```python 
 #Create train test split
 test_size = .2
@@ -112,25 +88,62 @@ X_train_ori, X_test_ori = data[:split_index, :], data[split_index:, :]
 
 X_train_miss = missing_data[:split_index, :]
 X_test_miss = missing_data[split_index:, :]  
-```  
+```
+
+## If you install with with pip:
+
+```python 
+from DIMVImputation import DIMVImputation
+
+# Create an instance of the DIMVImputation class
+imputer = DIMVImputation()
+
+# Fit the imputer on the training set to compute the covariance matrix 
+imputer.fit(X_train_miss, initializing=False)
+
+# Apply imputation to the missing data that we want to impute 
+X_test_imputed = imputer.transform(X_test_miss)  
+``` 
+
+
+## If you install with option 2(clone the repo) 
+The `.fit()` function is applied to the training set to compute the covariance matrix, which is then calculated based on the training set. 
 
 Fit the model on the train set: 
 ```python 
-from DIMVImputation.DIMVImputation import DIMVImputation 
+from DIMVImputation.DIMVImputation import DIMVImputation
+
+# Create an instance of the DIMVImputation class
 imputer = DIMVImputation()
+
+# Fit the imputer on the training set to compute the covariance matrix 
 imputer.fit(X_train_miss, initializing=False)
 
-```
+# Apply imputation to the missing data that we want to impute 
+X_test_imputed = imputer.transform(X_test_miss)  
+```  
 
-Then use ```.cross_validate()``` to grid search for optimal value for reguralization value $\alpha$ and finally tranform the missing data ```X_test_miss``` 
+## Cross-validation options 
+
+By **default**, `DIMVImputation` uses cross-validation to determine the optimal value for the regularization parameter (alpha). The default regularization parameter values include alphas of 0.0, 0.01, 0.1, 1.0, 10.0, and 100.0. Moreover, the default percentage of data utilized for training in cross-validation is set to 100%. 
+
+- If you wish to specify the range of alphas for cross-validation, use `.cross_validate()` to perform a grid search for the optimal regularization parameter value, $\alpha$. Finally, the transformation is applied to the missing data. ```X_test_miss```. For example 
 
 ```python
-
 # To input your alpha grid and data percentage for cross-validation, use the following two lines of code
-imputer.cross_validate(train_percent=80, alphas=[0.0, 0.01, 0.1, 1.0])
+imputer.cross_validate(alphas=[0.0, 0.01, 0.1, 1.0]) 
 X_test_imp = imputer.transform(X_test_miss, cross_validation=False)
-
 ```
+
+- If you wish to adjust the percentage of training data used during cross-validation (this only affects cross-validation, not the `.fit()` function), `fit` will still use the training set you provided. You can then go ahead and apply the transformation as shown below. 
+
+```python
+# To input your alpha grid and data percentage for cross-validation, use the following two lines of code
+imputer.cross_validate(train_percent=80, alphas=[0.0, 0.01, 0.1, 1.0]) 
+X_test_imp = imputer.transform(X_test_miss, cross_validation=False)
+```
+ 
+
 
 
 
