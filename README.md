@@ -5,7 +5,7 @@ This is an **imputation package for missing data**, which can be easily installe
 
 The code repository associated with the paper: "Conditional expectation with regularization for missing data imputation." This paper is under evaluation for the journal you can find it at https://arxiv.org/abs/2302.00911 
 
-# Introduction:
+# Introduction
 Conditional Distribution-based Imputation of Missing Values with Regularization (DIMV): An algorithm for imputing missing data with low RMSE, scalability, and explainability. Ideal for critical domains like medicine and finance, DIMV offers reliable analysis, approximated confidence regions, and robustness to assumptions, making it a versatile choice for data imputation. DIMV is under the assumption that it relies on the normally distributed assumption as part of its theoretical foundation. The assumption of normality is often used in statistical methods and imputation techniques because it simplifies data modeling.  
 
 # Comparision 
@@ -32,7 +32,7 @@ For medium datasets (MNIST and FashionMNIST):
 DIMV has shown promising performance in terms of computational efficiency and robustness across small to medium datasets, accommodating a variety of missing data patterns. However, like many imputation methods, DIMV may face challenges with computational time when dealing with large datasets or high-dimensional data. For instance, popular imputation methods like k-nearest Neighbors Imputation (KNNI) can sometimes encounter performance issues in these scenarios. 
 
   
-# Contents:
+# Contents
 The codes are structured as follows:  
 
 ``` 
@@ -59,7 +59,7 @@ In ```/src``` folders:
 ```example.ipynb``` is a Jupyter Notebook file that contains examples demonstrating how to use the functionalities and methods.  
 
 
-#  Installation: 
+#  Installation
 ### Option 1: Install with pip 
 Install the package with: 
 ```
@@ -82,7 +82,7 @@ pip install -r requirements.txt
 # Usages: 
 
 ## If you install with option 1 (with pip):
-For example you have missing data array named X and you want to impute following the DIMV imputation 
+For example, suppose you have a dataset with missing values named X, and you wish to apply the DIMV imputation method to fill in these missing values. 
 
 ```python 
 from DIMVImputation import DIMVImputation
@@ -103,7 +103,7 @@ X_imputed = imputer.transform(X)
 
 
 ## If you install with option 2(clone the repo) 
-The ```.fit()``` function applied on train set to compute the covariance matrix. The covariance matrix is calculated from the train set. 
+The `.fit()` function is applied to the training set to compute the covariance matrix, which is then calculated based on the training set. 
 
 Create a sample dataset as a numpy array ```missing_data``` 
 ```python 
@@ -134,6 +134,8 @@ imputer.cross_validate(train_percent=80, alphas=[0.0, 0.01, 0.1, 1.0])
 X_test_imp = imputer.transform(X_test_miss, cross_validation=False)
 
 ```
+
+
 
 
 
